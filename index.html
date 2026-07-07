@@ -271,7 +271,7 @@
 
                 <div
                 class="link-name"
-                onclick="window.open('${link.url}','_blank')">
+                onclick="openSocial('${link.name}')">
                 ${link.name}
                 </div>
 
@@ -327,6 +327,58 @@
                 `https://wa.me/?text=${encodeURIComponent(currentUrl)}`,
                 '_blank'
                 );
+            }
+
+            function openSocial(platform) {
+
+                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+                const links = {
+                    facebook: {
+                        app: "fb://facewebmodal/f?href=https://www.facebook.com/share/1NNhZ47sik/",
+                        web: "https://www.facebook.com/share/1NNhZ47sik/"
+                    },
+
+                    instagram: {
+                        app: "instagram://user?username=michaelvl93",
+                        web: "https://www.instagram.com/michaelvl93"
+                    },
+
+                    linkedin: {
+                        app: "linkedin://in/michaelvargasloza",
+                        web: "https://www.linkedin.com/in/michaelvargasloza"
+                    },
+
+                    youtube: {
+                        app: "vnd.youtube://youtube.com/@michaelvargasdeveloper",
+                        web: "https://youtube.com/@michaelvargasdeveloper"
+                    },
+
+                    github: {
+                        web: "https://github.com/michaelvargasloza"
+                    }
+                };
+
+                const item = links[platform.toLowerCase()];
+
+                if (!item) return;
+
+                if (!isMobile || !item.app) {
+                    window.open(item.web, "_blank");
+                    return;
+                }
+
+                const start = Date.now();
+
+                window.location = item.app;
+
+                setTimeout(() => {
+
+                    if (Date.now() - start < 2500) {
+                        window.location = item.web;
+                    }
+
+                }, 1200);
             }
         </script>
     </body>
